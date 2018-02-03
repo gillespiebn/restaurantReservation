@@ -18,7 +18,6 @@ app.use(express.static(__dirname + '/public'))
 // Reservations (DATA)
 // =============================================================
 var reservations = [];
-console.log("howdy");
 // Routes
 // =============================================================
 
