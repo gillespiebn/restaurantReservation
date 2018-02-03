@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+// const appp = require("./app");
 
 // Sets up the Express App
 // =============================================================
@@ -12,11 +13,12 @@ var PORT = process.env.PORT || 3000;
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'))
 
 // Reservations (DATA)
 // =============================================================
 var reservations = [];
-
+console.log("howdy");
 // Routes
 // =============================================================
 
@@ -42,11 +44,11 @@ app.post("/reserve/new", function(req, res) {
   var newReservation = req.body;
   // Using a RegEx Pattern to remove spaces from newCharacter
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
+  newReservation.routeName = newReservation.uniqueId.replace(/\s+/g, "").toLowerCase();
 
   console.log(newReservation);
 
-  characters.push(newReservation);
+  reservations.push(newReservation);
 
   res.json(newReservation);
 });
@@ -65,3 +67,11 @@ app.listen(PORT, function() {
 //     age: 900,
 //     forcePoints: 2000
 //   },
+
+// const server = require("./server.js");
+
+// document.getElementById("submit-res").onclick = function(){
+//     myFunction();
+// }
+
+// const myFunction = () => console.log("this happened");
