@@ -1,23 +1,20 @@
-const Reservation = () =>{
-    this.name = $("#res-name");
-    this.phone = $("#res-phone");
-    this.email = $("#res-email");
-    this.id = $("#unique-id");
+var Reservation = function(){
+    this.name = $("#res-name").val(),
+    this.phone = $("#res-phone").val(),
+    this.email = $("#res-email").val(),
+    this.id = $("#unique-id").val()
 }
+
 $("#submit-res").click(() =>{
-//     console.log("this happened after click");
-    var newRes = Reservation();
-    var url = "http://localhost:3000/reserve/new"
+    
+    var newRes = new Reservation();
+    var url = "/reserve/new"
+    console.log(newRes);
     $.ajax({
         type: "POST",
         url: url,
-        data: newRes,
-        success: "success",
-        dataType: "object"
-    })
-    $.post("http://localhost:3000/reserve/new", Reservation(), function(){
-        alert("it posted");
-    })
+        data: newRes
+    }).done(() => console.log("success!"))
 })
 // })
 
