@@ -1,2 +1,3 @@
-# HotRestaurant
-Make a reservation at this  hot restaurant
+# Restaurant reservation app
+
+
