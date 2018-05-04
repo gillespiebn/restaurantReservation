@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- CSS link -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Reservation Table</title>
+    </head>
+<body>
+    <!--Jumbotron-->  
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-12">
+                    <div class="jumbotron jumbotron-fluid rounded jumboImg text-white">
+                        <div class="display-1 text-center font-weight-bold">   <i class="fa fa-fire"></i>  La Crêperie</div>
+                        <div class="lead text-center font-weight-bold">Only five seats left, reserve now!</div>
+                        <br>
+                        <div class="buttonsDiv text-center">
+                            <a href="reservations"><button class="btn btn-primary text-center"><i class="fas fa-credit-card"></i>  Make Reservations</button></a>
+                            <!-- <a href="tables.html"><button class="btn btn-danger text-center"><i class="fas fa-utensils"></i>  View Tables</button></a> -->
+                            <a href="/"><button class="btn btn-secondary text-center"><i class="fas fa-home"></i></button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>  
+    <!--Reservation Table-->
+    <div class="row">
+        <div class ="col-md-2"></div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">Current Reservations</div>
+                    <div class="card-block">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Reservation</th>
+                                    <th>Unique ID</th>
+                                </tr>
+                            </thead>
+                                <tbody> 
+                                    <div id="resInfo">
+                                    </div>
+                                </tbody>
+                            </table>
+                    </div>
+            </div>    
+        </div>
+        <div class ="col-md-2"></div>
+    </div>
+    
+    <!--Waiting List Table-->
+    <div class="row">
+            <div class ="col-md-2"></div>
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">Waiting List</div>
+                        <div class="card-block">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Reservation</th>
+                                        <th>Unique ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div id="waitInfo">
+                                     </div>
+                                    </tbody>
+                                </table>
+                        </div>
+                </div>
+                <a id="clear" href="#">Clear Tables </a> |
+                <a href="api/reservations"> API Table Link </a> |
+                <a href="api/waitlist"> API Wait List</a>    
+            </div>
+            <div class ="col-md-2"></div>
+        </div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!--Font Awesome-->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+</body>
+<script>
+
+    function runReservationQuery() {
+
+        var currentURL = window.location.origin;
+
+        $.ajax({ url: currentURL +"/api/reservations", method: "GET"})
+        .done(function(reservationData) {
+            for (var i = 0; i < reservationData.length; i++) {
+                var resInfo = $('<div>');
+                resInfo.addClass('reservation');
+                resInfo.attr("id", "reservation-" + i + 1);
+                $("#resInfo").append(resInfo);
+
+                var reservationNum = i + 1;
+
+                $("reservation-" + i + 1).append("<h2>" + reservationNum + "</h2>: <h3>" + reservationData[i].id + "</h3>");
+            }
+        });
+
+    }
+
+    function runWaitQuery() {
+
+    var currentURL = window.location.origin;
+
+    $.ajax({ url: currentURL +"/api/waitlist", method: "GET"})
+    .done(function(waitlistData) {
+        for (var i = 0; i < waitlistData.length; i++) {
+            var waitInfo = $('<div>');
+            waitInfo.addClass('waitlist');
+            waitInfo.attr("id", "waitlist-" + i + 1);
+            $("#waitInfo").append(waitInfo);
+
+            var reservationNum = i + 1;
+
+            $("#waitlist-" + i + 1).append("<h2>" + waitlistNum + "</h2>: <h3>" + waitlistData[i].id + "</h3>");
+        }
+    });
+
+    }
+
+    function clearData() {
+        var currentURL = window.location.origin;
+
+        $.ajax({ url: currentURL + "/api/clear", method: "POST"});
+    }
+
+    $("#clear").on("click", function() {
+        console.log("cleared");
+        clearData();
+
+        location.reload();
+    });
+
+    runReservationQuery();
+    runWaitQuery();
+</script>
+</html>

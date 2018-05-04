@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- CSS link -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Reservation Table</title>
+  </head>
+  <body>
+    <!--Jumbotron-->  
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-12">
+                    <div class="jumbotron jumbotron-fluid rounded jumboImg text-white">
+                        <div class="display-1 text-center font-weight-bold" id="headline">   <i class="fa fa-fire"></i>  La Crêperie</div>
+                        <div class="lead text-center font-weight-bold" id="tagline">Only five seats left, reserve now!</div>
+                        <br>
+                        <div class="buttonsDiv text-center">
+                            <!-- <a href="reservation.html"><button class="btn btn-primary text-center"><i class="fas fa-credit-card"></i>  Make Reservations</button></a> -->
+                            <a href="tables"><button class="btn btn-danger text-center"><i class="fas fa-utensils"></i>  View Tables</button></a>
+                            <a href="/"><button class="btn btn-secondary text-center"><i class="fas fa-home"></i></button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+               
+    <!--New Reservation Input -->	
+    <div class="row">
+        <div class ="col-md-2"></div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">Table Reservation</div>
+                <div class="card block">
+                    <form>
+                        <div class="form-group">
+                            <label for="res-name">Name</label>
+                            <input class="form-control" id="res-name" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="res-phone">Phone Number</label>
+                            <input class="form-control" id="res-phone" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="res-email">Email</label>
+                            <input class="form-control" id="res-email" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="unique-id">Unique ID</label>
+                            <input class="form-control" id="unique-id" type="number">
+                        </div>
+                        <button class="btn btn-primary" id="submit-res" type="button">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <a href="api/reservations">API Table Link </a> |
+            <a href="api/waitlist"> API Wait List</a>
+        </div>
+        <div class ="col-md-2"></div>
+    </div>
+    
+<!-- 
+  <script type="text/javascript">
+    // Question: What does this code do?
+    $("#submit-res").on("click", function(event) {
+      event.preventDefault();
+      var newReservation = {
+        name: $("#res-name").val().trim(),
+        phone: $("#res-phone").val().trim(),
+        email: $("#res-email").val().trim(),
+        ID: $("#unique-id").val().trim()
+      };
+
+      // Question: What does this code do??
+      $.post("/reserve/new", newReservation)
+      .then(function(data) {
+        console.log(data);
+        alert("Adding reservation...");
+      });
+    });
+  </script>  -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!--Font Awesome-->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+
+  
+</body>
+<script>
+    $("#submit-res").on("click", function(event) {
+    event.preventDefault();
+
+    var newReservation ={
+        name: $("#res-name").val().trim(),
+        phone: $("#res-phone").val().trim(),
+        email: $("#res-email").val().trim(),
+        id: $("#unique-id").val().trim()
+    };
+
+
+
+
+  $.post("/api/reservations", newReservation,
+   function(data) {
+    if (data) {
+        alert("You have been booked");
+    } else {
+        alert("You have been put on the wait list");
+    }
+        $("#res-name").val("");
+        $("#res-phone").val("");
+        $("#res-email").val("");
+        $("#unique-id").val("");
+  
+  });
+
+  });
+</script>
+</html>
