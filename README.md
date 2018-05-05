@@ -6,6 +6,6 @@ After the 5 spots are filled, the user will be put on the wait list
 
 
 
-![alt text](https://i.imgur.com/BX3YlXQ.png)
+![alt text](https://i.imgur.com/83hz0Vh.png)
 
 
